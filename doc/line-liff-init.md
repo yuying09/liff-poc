@@ -1,15 +1,15 @@
 ---
-title: Line Liff開發研究 －哲煜前端
+title: Line Liff開發研究
 
 ---
 
-# Line Liff開發研究 －哲煜前端
+# Line Liff開發研究 
 > 以next試做的liff專案
 
 ## 第一步：建立channel（基礎環境建立）
 
 1. 以商務帳號登入https://account.line.biz/login?redirectUri=https%3A%2F%2Fdevelopers.line.biz%2Fconsole%2F
-帳密為哲煜前端帳號（可以再和同事詢問帳密）
+
 
 2. 新增line login channel
 
