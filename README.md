@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LINE LIFF PoC — Next.js
 
-## Getting Started
+以 Next.js 實作的 LINE LIFF 最小可行性研究專案，驗證 LIFF 與 Next.js App Router 的整合可行性。
 
-First, run the development server:
+## 專案說明
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **框架**：Next.js 16 + React 19 + TypeScript
+- **樣式**：Tailwind CSS v4
+- **部署**：Vercel
+- **研究目標**：LINE LIFF 身份驗證流程、SSR/RSC 相容性問題
+
+## 環境設定
+
+建立 `.env.local`：
+
+```
+NEXT_PUBLIC_LIFF_ID=你的LIFF-ID
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+LIFF ID 從 [LINE Developers Console](https://developers.line.biz/console/) 取得。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 本地開發
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm install
+pnpm dev
+```
 
-## Learn More
+> LIFF 需要 HTTPS，本地測試請搭配 ngrok 或 Vercel 部署後測試。
 
-To learn more about Next.js, take a look at the following resources:
+## 專案結構
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src/
+├── app/
+│   ├── layout.tsx        # 包含 LiffProvider
+│   └── page.tsx          # 主頁面（登入 / 會員資料）
+├── components/
+│   └── LiffProvider.tsx  # LIFF 初始化與狀態管理
+├── hooks/
+│   └── useLiff.ts        # 取用 LIFF 狀態的 hook
+└── lib/
+    └── liff.ts           # LIFF SDK 動態載入封裝
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 測試方式
 
-## Deploy on Vercel
+用手機 LINE 開啟：
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+https://liff.line.me/<LIFF-ID>
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+或瀏覽器直接開啟 Vercel 網址測試外部瀏覽器登入流程。
+
+## 快速初始化（Claude Code Skill）
+
+[doc/liff-next-init.md](doc/liff-next-init.md) 是一份 Claude Code 自訂指令，可協助在新的 Next.js 專案中快速完成 LINE LIFF 初始化。
+
+將檔案複製到 `~/.claude/commands/` 後，在 Claude Code 輸入 `/liff-next-init` 即可啟動引導流程。
+
+```bash
+cp doc/liff-next-init.md ~/.claude/commands/liff-next-init.md
+```
+
+## 文件
+
+- [研究計劃](doc/liff-research-plan.md)
+- [LiffProvider 說明](doc/LiffProvider.md)
+- [開發研究筆記](doc/line-liff-init.md)
+- [LIFF Next.js 初始化指令](doc/liff-next-init.md)
