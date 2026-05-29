@@ -3,7 +3,7 @@ name: LIFF Next.js Init
 description: 引導在 Next.js 專案中完成 LINE LIFF 初始化，包含 LINE Developers 設定、核心架構建立、Vercel 部署。
 ---
 
-# LINE LIFF 初始化 Skill（Next.js）
+# LINE LIFF 初始化（Next.js）
 
 當使用者執行 `/liff-next-init` 時，依照以下步驟協助建立 LINE LIFF 核心架構（適用於 Next.js 專案）。
 
