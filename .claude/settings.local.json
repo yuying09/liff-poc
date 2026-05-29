@@ -1,0 +1,10 @@
+{
+  "enabledMcpjsonServers": [
+    "figma-mcp-go"
+  ],
+  "permissions": {
+    "allow": [
+      "mcp__figma-mcp-go__get_metadata"
+    ]
+  }
+}
