@@ -99,7 +99,7 @@ export function LiffProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = useCallback(() => {
-    state.liff?.login();
+    state.liff?.login({ redirectUri: window.location.href });
   }, [state.liff]);
 
   const logout = useCallback(() => {
