@@ -3,7 +3,7 @@ name: LIFF Next.js Init
 description: 引導在 Next.js 專案中完成 LINE LIFF 初始化，包含 LINE Developers 設定、核心架構建立、Vercel 部署。
 ---
 
-# LINE LIFF 初始化（Next.js）
+# LINE LIFF 初始化 Skill（Next.js）
 
 當使用者執行 `/liff-next-init` 時，依照以下步驟協助建立 LINE LIFF 核心架構（適用於 Next.js 專案）。
 
@@ -373,3 +373,44 @@ LINE LIFF 初始化已完成，專案具備以下能力：
 - 判斷是否在 LINE app 內開啟
 
 可以開始開發專案業務功能。
+
+---
+
+## 補充知識
+
+### Callback URL 與 LIFF Endpoint URL 的差異
+
+LINE Login Channel 設定裡有兩個容易混淆的網址欄位：
+
+**Callback URL**（LINE Login → Basic Settings）
+
+用於**標準 LINE Login OAuth 流程**，是你後端接收授權碼的 API endpoint。
+
+流程如下：
+```
+用戶點「用 LINE 登入」
+→ LINE 授權頁
+→ 用戶同意後，LINE 把授權碼帶到 Callback URL
+   例如：https://yourapp.com/api/auth/line/callback?code=xxxxx
+→ 後端拿 code 跟 LINE 換 access token
+→ 驗證完成，建立 session 回給前端
+```
+
+在 Next.js 對應的是 `app/api/auth/line/callback/route.ts` 這支 Route Handler。
+
+**LIFF Endpoint URL**（LINE Login → LIFF tab）
+
+用於 **LIFF 流程**，是你的網頁應用程式的網址。LIFF 的 OAuth redirect 先打到 LINE 自己的 `liff.line.me` 伺服器，由 LINE 內部處理完再跳回 Endpoint URL，不需要你設定 Callback URL。
+
+---
+
+**何時需要 Callback URL**
+
+| 情境 | 需要 Callback URL |
+|------|-----------------|
+| 純 LIFF 流程（`liff.login()`） | ❌ 不需要 |
+| 標準 LINE Login 按鈕（非 LIFF） | ✅ 需要 |
+| 後端 server 端直接換 token | ✅ 需要 |
+| 同一服務同時支援 LIFF 和一般網站入口 | ✅ 兩種都要設定 |
+
+這個 PoC 完全走 LIFF 流程，Callback URL 不需要設定。
